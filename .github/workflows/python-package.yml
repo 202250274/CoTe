@@ -32,5 +32,5 @@ jobs:
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.PAT }}  # 여기서 PAT는 위에서 설정한 secret 이름입니다
+        github_token: ${{ secrets.PAToken }}  # 여기서 PAT는 위에서 설정한 secret 이름입니다
         branch: ${{ github.ref }}
