@@ -33,4 +33,4 @@ jobs:
         git commit -m "auto update README.md" || echo "No changes to commit"
         git push origin main
       env:
-        GITHUB_TOKEN: ${{ secrets.PAToken }}
+        GITHUB_TOKEN: ${{ secrets.PATOKEN }}
