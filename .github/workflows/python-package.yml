@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -23,14 +25,12 @@ jobs:
     - name: Run update.py
       run: |
         python update.py
-    - name: Commit changes
+    - name: Commit and push changes
       run: |
         git config --local user.name 'jyp'
         git config --local user.email 'singiri129@jbnu.ac.kr'
         git add -A
         git commit -m "auto update README.md" || echo "No changes to commit"
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.PAToken }}  # 여기서 PAT는 위에서 설정한 secret 이름입니다
-        branch: ${{ github.ref }}
+        git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAToken }}
