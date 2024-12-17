@@ -1,12 +1,11 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: Update readme
-
 on:
   push:
     branches: [ "main" ]
   pull_request:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -26,10 +25,12 @@ jobs:
         python update.py
     - name: Commit changes
       run: |
-        git config --global user.name 'jyp' # 유저명
-        git config --global user.email 'singiri129@jbnu.ac.kr' # 유저 이메일
+        git config --local user.name 'jyp'
+        git config --local user.email 'singiri129@jbnu.ac.kr'
         git add -A
-        git commit -am "auto update README.md" # 커밋 메시지
-    - name: Push changes 
-      run: |
-        git push
+        git commit -m "auto update README.md" || echo "No changes to commit"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.PAT }}  # 여기서 PAT는 위에서 설정한 secret 이름입니다
+        branch: ${{ github.ref }}
